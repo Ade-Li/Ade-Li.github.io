@@ -6,24 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>面试记录 | Bo&#39;s blog</title>
+  <title>如何解决vuex碰到浏览器刷新页面数据的丢失 | Bo&#39;s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="article">
-<meta property="og:title" content="面试记录">
-<meta property="og:url" content="http://example.com/2022/06/15/%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/index.html">
+  <meta name="description" content="方案1   本地存储，利用浏览器的会话缓存 sessionStorage 或者localStorage, cookies，具体实现代码如下：  在 App.vue 中增加监听刷新事件  1234567891011export default &amp;#123;    name: &quot;App&quot;,    mounted() &amp;#123;        window.addEventLis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何解决vuex碰到浏览器刷新页面数据的丢失">
+<meta property="og:url" content="http://example.com/2022/03/24/vuex%E7%A2%B0%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%B7%E6%96%B0/index.html">
 <meta property="og:site_name" content="Bo&#39;s blog">
+<meta property="og:description" content="方案1   本地存储，利用浏览器的会话缓存 sessionStorage 或者localStorage, cookies，具体实现代码如下：  在 App.vue 中增加监听刷新事件  1234567891011export default &amp;#123;    name: &quot;App&quot;,    mounted() &amp;#123;        window.addEventLis">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-15T07:03:02.000Z">
-<meta property="article:modified_time" content="2022-06-15T07:06:12.476Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:published_time" content="2022-03-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-15T11:41:24.561Z">
+<meta property="article:author" content="Li Bo">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Bo&#39;s blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/faviconss.ico">
   
   
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
@@ -61,10 +63,10 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="/img/head.jpg" class="js-avatar">
+			<img src="/img/head1.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-			<h1 class="header-author"><a href="/">John Doe</a></h1>
+			<h1 class="header-author"><a href="/">Li Bo</a></h1>
 		</hgroup>
 		
 
@@ -123,11 +125,11 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 				<a href="/">
-					<img src="/img/head.jpg" class="js-avatar">
+					<img src="/img/head1.jpg" class="js-avatar">
 				</a>
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Li Bo</h1>
 			</hgroup>
 			
 			
@@ -167,14 +169,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-面试记录" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-vuex碰到浏览器刷新" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      面试记录
+      如何解决vuex碰到浏览器刷新页面数据的丢失
     </h1>
   
 
@@ -186,8 +188,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2022/06/15/%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/" class="archive-article-date">
-        <time datetime="2022-06-15T07:03:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-15</time>
+<a href="/2022/03/24/vuex%E7%A2%B0%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%B7%E6%96%B0/" class="archive-article-date">
+        <time datetime="2022-03-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-24</time>
 </a>
 
   
@@ -200,7 +202,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">0字</span>
+      <span class="post-count">414字</span>
     </span>
   </span>
 
@@ -220,41 +222,42 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    
-    
+    <h1> 方案1 </h1>
+
+<p>本地存储，利用浏览器的会话缓存 <code>sessionStorage</code> 或者<code>localStorage</code>, <code>cookies</code>，具体实现代码如下：</p>
+<ul>
+<li>在 <code>App.vue</code> 中增加监听刷新事件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">    name: &quot;App&quot;,</span><br><span class="line">    mounted() &#123;</span><br><span class="line">        window.addEventListener(&quot;unload&quot;, this.savaState);</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        savaState() &#123;</span><br><span class="line">            sessionStorage.setItem(&quot;tabList&quot;, JSON.stringify(this.$store.state.tabsView.tabList));</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1> 方案2 </h1>
+
+<span id="more"></span>
+
+<p>利用插件<code>vuex-persistedstate</code></p>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save vuex-persistedstate</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>tabsView.js</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const state = &#123;</span><br><span class="line">    // tabList: sessionStorage.getItem(&#x27;tabList&#x27;)?JSON.parse(sessionStorage.getItem(&#x27;tabList&#x27;)) : [], // 页签数组</span><br><span class="line">    tabList: [], // 页签数组</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const getter = &#123;&#125;</span><br><span class="line"></span><br><span class="line">const mutations = &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const actions = &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    namespaced: true, // 开启命名空间</span><br><span class="line">    state,</span><br><span class="line">    getter,</span><br><span class="line">    mutations,</span><br><span class="line">    actions,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>store</code> 出口文件 <code>index.js</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">2import Vue from &quot;vue&quot;</span><br><span class="line">import Vuex from &quot;vuex&quot;</span><br><span class="line">// 引入插件api</span><br><span class="line">import createPersistedState from &quot;vuex-persistedstate&quot;;</span><br><span class="line">// 引入module js文件</span><br><span class="line">import tabsView from &quot;./modules/tabsView&quot;</span><br><span class="line"></span><br><span class="line">const tabListState = createPersistedState(&#123;</span><br><span class="line">    storage: window.sessionStorage, // 使用sessionStorage 进行state 持久化</span><br><span class="line">    paths: [&#x27;tabsView.tabList&#x27;] // 只对 tabsView module 文件中的 tabList state 持久化</span><br><span class="line">    // paths: [&#x27;tabsView&#x27;] // 对 tabsView module 文件中的整个 state 持久化</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">    modules: &#123;</span><br><span class="line">        tabsView,</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [tabListState]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default store</span><br></pre></td></tr></table></figure>
+
+<h1> 总结 </h1>
+
+<blockquote>
+<p>方案一：比较适合只对一个<code>state </code>进行持久化，代码程度不复杂，简单，但是随之而来的就是书写的复杂度，在对state 命名赋值的时候都需要判断是从本地存储中取，还是直接赋值，代码不美观，不易于维护。<br>方案二：相比方案一，依赖插件，代码美观，统一的都在store的出口文件 <code>index.js</code>中进行维护，具有一定的优势，特别是如果需要对多个state 进行持久化的化，方案二无疑是最佳选择。</p>
+</blockquote>
 
     
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/alipay.jpg">
-                    <span class="reward-type">支付宝</span>
-                  </div>
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/weixin.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
+
     
 
     
@@ -262,11 +265,11 @@
       <ul class="post-copyright">
         <li>
           <strong>本文作者：</strong>
-          John Doe
+          Li Bo
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2022/06/15/面试记录/" title="面试记录" target="_blank">http://example.com/2022/06/15/面试记录/</a>
+          <a href="http://example.com/2022/03/24/vuex碰到浏览器刷新/" title="如何解决vuex碰到浏览器刷新页面数据的丢失" target="_blank">http://example.com/2022/03/24/vuex碰到浏览器刷新/</a>
         </li>
         
         <li>
@@ -333,7 +336,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/06/15/%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/03/24/vuex%E7%A2%B0%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%B7%E6%96%B0/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -383,7 +386,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2022 <a href="http://example.com/" target="_blank">John Doe</a>
+    		&copy; 2018-2022 <a href="http://example.com/" target="_blank">Li Bo</a>
     	</div>
       	<div class="footer-right">
 			
@@ -438,10 +441,10 @@
   var titleTime;
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
-      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      document.title = "看不见我，看不见我" + originTitle;
       clearTimeout(titleTime);
     } else {
-      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      document.title = "被你逮到啦~ " + originTitle;
       titleTime = setTimeout(function () {
         document.title = originTitle;
       }, 2000);
@@ -551,7 +554,7 @@
           
             <li class="search-li">
               <a href="https://zhousiwei.gitee.io/ibooks/" target="_blank" 
-                class="search-title" title="记录工作和学习过程中的笔记：Java、前端开发、Hexo博客、聚合支付、Linux笔记、ElasticSearch、ELK日志分析">
+                class="search-title" title="记录工作和学习过程中的笔记：前端开发">
                 
                   <img src="https://zhousiwei.gitee.io/ibooks/favicon.ico">
                 
@@ -560,7 +563,7 @@
             </li>
           
             <li class="search-li">
-              <a href="https://github.com/JoeyBling" target="_blank" 
+              <a href="https://github.com/Ade-Li" target="_blank" 
                 class="search-title" >
                 
                   <i class="icon-link icon"></i>
@@ -570,27 +573,7 @@
             </li>
           
             <li class="search-li">
-              <a href="https://gitee.com/zhousiwei" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                码云
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://www.jianshu.com/u/02cbf31a043a" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                简书
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://blog.csdn.net/qq_30930805" target="_blank" 
+              <a href="https://blog.csdn.net/Methodss" target="_blank" 
                 class="search-title" >
                 
                   <i class="icon-link icon"></i>
@@ -608,7 +591,7 @@
     	<section class="tools-section tools-section-me" q-show="aboutme">
         
           
-  	  		<div class="aboutme-wrap" id="aboutme">主要涉及技术：<br>Java后端开发、聚合支付、<br>公众号开发、开源爱好者、Linux<br><br>联系QQ:2434387555<br><br>很惭愧<br><br>只做了一点微小的工作<br>谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="aboutme">主要涉及技术：<br>前端开公、众号开发、小程序开发、开源爱好者。</div>
   	  	
     	</section>
     
