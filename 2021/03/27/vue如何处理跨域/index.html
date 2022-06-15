@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>如何解决vuex碰到浏览器刷新页面数据的丢失 | Bo&#39;s blog</title>
+  <title>vue如何配置跨域 | Bo&#39;s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="方案1   本地存储，利用浏览器的会话缓存 sessionStorage 或者localStorage, cookies，具体实现代码如下：  在 App.vue 中增加监听刷新事件  1234567891011export default &amp;#123;    name: &quot;App&quot;,    mounted() &amp;#123;        window.addEventLis">
+  <meta name="description" content="在package.json同级目录下新建文件vue.config.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何解决vuex碰到浏览器刷新页面数据的丢失">
-<meta property="og:url" content="http://example.com/2022/03/24/vuex%E7%A2%B0%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%B7%E6%96%B0/index.html">
+<meta property="og:title" content="vue如何配置跨域">
+<meta property="og:url" content="http://example.com/2021/03/27/vue%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F/index.html">
 <meta property="og:site_name" content="Bo&#39;s blog">
-<meta property="og:description" content="方案1   本地存储，利用浏览器的会话缓存 sessionStorage 或者localStorage, cookies，具体实现代码如下：  在 App.vue 中增加监听刷新事件  1234567891011export default &amp;#123;    name: &quot;App&quot;,    mounted() &amp;#123;        window.addEventLis">
+<meta property="og:description" content="在package.json同级目录下新建文件vue.config.js">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-03-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-06-15T11:41:24.561Z">
+<meta property="article:published_time" content="2021-03-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-15T13:20:57.981Z">
 <meta property="article:author" content="Li Bo">
 <meta name="twitter:card" content="summary">
   
@@ -169,14 +169,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-vuex碰到浏览器刷新" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-vue如何处理跨域" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      如何解决vuex碰到浏览器刷新页面数据的丢失
+      vue如何配置跨域
     </h1>
   
 
@@ -188,8 +188,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2022/03/24/vuex%E7%A2%B0%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%B7%E6%96%B0/" class="archive-article-date">
-        <time datetime="2022-03-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-24</time>
+<a href="/2021/03/27/vue%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F/" class="archive-article-date">
+        <time datetime="2021-03-26T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-27</time>
 </a>
 
   
@@ -202,7 +202,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">414字</span>
+      <span class="post-count">174字</span>
     </span>
   </span>
 
@@ -222,38 +222,30 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h1> 方案1 </h1>
-
-<p>本地存储，利用浏览器的会话缓存 <code>sessionStorage</code> 或者<code>localStorage</code>, <code>cookies</code>，具体实现代码如下：</p>
-<ul>
-<li>在 <code>App.vue</code> 中增加监听刷新事件</li>
+    <ul>
+<li>在package.json同级目录下新建文件vue.config.js</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">    name: &quot;App&quot;,</span><br><span class="line">    mounted() &#123;</span><br><span class="line">        window.addEventListener(&quot;unload&quot;, this.savaState);</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        savaState() &#123;</span><br><span class="line">            sessionStorage.setItem(&quot;tabList&quot;, JSON.stringify(this.$store.state.tabsView.tabList));</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1> 方案2 </h1>
-
 <span id="more"></span>
 
-<p>利用插件<code>vuex-persistedstate</code></p>
-<ul>
-<li>安装</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save vuex-persistedstate</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    //自行复制黏贴</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        proxy: &#123;</span><br><span class="line">            &#x27;/api&#x27;: &#123;//以/api开头的地址会被替换成下面的target</span><br><span class="line">                target: &#x27;http://191.196.21.1:8080/&#x27;,  // 接口真实地址</span><br><span class="line">                changeOrigin: true,  //是否跨域</span><br><span class="line">                pathRewrite: &#123;</span><br><span class="line">                    &#x27;^/api&#x27;: &#x27;&#x27;   //需要rewrite的,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><code>tabsView.js</code></li>
+<li>axios基础路径改为：’/<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=api&spm=1001.2101.3001.7020">api</a>‘</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const state = &#123;</span><br><span class="line">    // tabList: sessionStorage.getItem(&#x27;tabList&#x27;)?JSON.parse(sessionStorage.getItem(&#x27;tabList&#x27;)) : [], // 页签数组</span><br><span class="line">    tabList: [], // 页签数组</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const getter = &#123;&#125;</span><br><span class="line"></span><br><span class="line">const mutations = &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const actions = &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    namespaced: true, // 开启命名空间</span><br><span class="line">    state,</span><br><span class="line">    getter,</span><br><span class="line">    mutations,</span><br><span class="line">    actions,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import axios from &#x27;axios&#x27;</span><br><span class="line"> </span><br><span class="line">// 基础路径</span><br><span class="line">axios.defaults.baseURL = &#x27;/api&#x27;</span><br><span class="line"></span><br><span class="line">// 挂载到Vue的原型链上，这样一个组件都可以通过this来访问axios</span><br><span class="line">Vue.prototype.$http = axios</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><code>store</code> 出口文件 <code>index.js</code></li>
+<li>请求方法</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">2import Vue from &quot;vue&quot;</span><br><span class="line">import Vuex from &quot;vuex&quot;</span><br><span class="line">// 引入插件api</span><br><span class="line">import createPersistedState from &quot;vuex-persistedstate&quot;;</span><br><span class="line">// 引入module js文件</span><br><span class="line">import tabsView from &quot;./modules/tabsView&quot;</span><br><span class="line"></span><br><span class="line">const tabListState = createPersistedState(&#123;</span><br><span class="line">    storage: window.sessionStorage, // 使用sessionStorage 进行state 持久化</span><br><span class="line">    paths: [&#x27;tabsView.tabList&#x27;] // 只对 tabsView module 文件中的 tabList state 持久化</span><br><span class="line">    // paths: [&#x27;tabsView&#x27;] // 对 tabsView module 文件中的整个 state 持久化</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">    modules: &#123;</span><br><span class="line">        tabsView,</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [tabListState]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default store</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$http.post(&#x27;auth/login&#x27;, this.loginForm)</span><br></pre></td></tr></table></figure>
 
-<h1> 总结 </h1>
+<ul>
+<li>实际的后端接口地址：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://191.196.21.1:8080/auth/login</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>方案一：比较适合只对一个<code>state </code>进行持久化，代码程度不复杂，简单，但是随之而来的就是书写的复杂度，在对state 命名赋值的时候都需要判断是从本地存储中取，还是直接赋值，代码不美观，不易于维护。<br>方案二：相比方案一，依赖插件，代码美观，统一的都在store的出口文件 <code>index.js</code>中进行维护，具有一定的优势，特别是如果需要对多个state 进行持久化的化，方案二无疑是最佳选择。</p>
+<h1>最后一点：记得重启项目！</h1>
 </blockquote>
 
     
@@ -269,7 +261,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2022/03/24/vuex碰到浏览器刷新/" title="如何解决vuex碰到浏览器刷新页面数据的丢失" target="_blank">http://example.com/2022/03/24/vuex碰到浏览器刷新/</a>
+          <a href="http://example.com/2021/03/27/vue如何处理跨域/" title="vue如何配置跨域" target="_blank">http://example.com/2021/03/27/vue如何处理跨域/</a>
         </li>
         
         <li>
@@ -336,7 +328,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/03/24/vuex%E7%A2%B0%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%B7%E6%96%B0/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/03/27/vue%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -348,6 +340,25 @@
   </div>
 </article>
 
+
+<nav id="article-nav">
+  
+    <a href="/2021/04/18/vue%E7%9A%84%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          你配置过vue的路由懒加载吗？
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/03/24/vuex%E7%A2%B0%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%B7%E6%96%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何解决vuex碰到浏览器刷新页面数据的丢失</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
 
 <aside class="wrap-side-operation">
